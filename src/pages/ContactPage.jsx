@@ -25,11 +25,10 @@ const ContactPage = () => {
     setSubmitError('')
 
     try {
-      const body = new URLSearchParams({ 'form-name': 'contact', ...formData })
-      const response = await fetch('/', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString()
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       })
 
       if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`)
