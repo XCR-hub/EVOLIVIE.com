@@ -9,8 +9,6 @@ const ContactPage = () => {
     sujet: '',
     message: ''
   })
-  const [submitStatus, setSubmitStatus] = useState('idle')
-  const [submitError, setSubmitError] = useState('')
 
   const handleChange = (e) => {
     setFormData({
@@ -19,27 +17,16 @@ const ContactPage = () => {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    setSubmitStatus('sending')
-    setSubmitError('')
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-
-      if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`)
-
-      setSubmitStatus('success')
-      setFormData({ nom: '', email: '', telephone: '', sujet: '', message: '' })
-    } catch (error) {
-      console.error('Erreur lors de l\'envoi du formulaire', error)
-      setSubmitStatus('error')
-      setSubmitError('Le message n\'a pas pu être envoyé. Vous pouvez nous écrire à team@evolivie.com.')
-    }
+    alert('Message envoyé ! Nous vous répondrons dans les plus brefs délais.')
+    setFormData({
+      nom: '',
+      email: '',
+      telephone: '',
+      sujet: '',
+      message: ''
+    })
   }
 
   return (
@@ -116,12 +103,12 @@ const ContactPage = () => {
                 <p style={{ color: '#666', marginBottom: '1rem' }}>
                   7j/7
                 </p>
-                <a href="mailto:team@evolivie.com" style={{
+                <a href="mailto:contact@evolivie.com" style={{ 
                   color: '#3AB795', 
                   fontWeight: '600',
                   fontSize: '1.1rem'
                 }}>
-                  team@evolivie.com
+                  contact@evolivie.com
                 </a>
               </div>
 
@@ -151,16 +138,12 @@ const ContactPage = () => {
               </div>
             </div>
 
-            <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={handleSubmit} style={{
+            <form onSubmit={handleSubmit} style={{ 
               backgroundColor: 'white', 
               padding: '2rem', 
               borderRadius: '12px',
               boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
             }}>
-              <input type="hidden" name="form-name" value="contact" />
-              <p hidden>
-                <label>Ne pas remplir : <input name="bot-field" /></label>
-              </p>
               <h2 style={{ marginBottom: '1.5rem', textAlign: 'center' }}>
                 Envoyez-nous un message
               </h2>
@@ -291,7 +274,6 @@ const ContactPage = () => {
 
               <button
                 type="submit"
-                disabled={submitStatus === 'sending'}
                 className="btn btn-primary"
                 style={{
                   width: '100%',
@@ -299,19 +281,8 @@ const ContactPage = () => {
                   padding: '15px'
                 }}
               >
-                {submitStatus === 'sending' ? 'Envoi en cours…' : 'Envoyer le message'}
+                Envoyer le message
               </button>
-
-              {submitStatus === 'success' && (
-                <p role="status" style={{ textAlign: 'center', marginTop: '1rem', color: '#18794e', fontWeight: '600' }}>
-                  Message envoyé ! Notre équipe vous répondra dans les plus brefs délais.
-                </p>
-              )}
-              {submitStatus === 'error' && (
-                <p role="alert" style={{ textAlign: 'center', marginTop: '1rem', color: '#b42318', fontWeight: '600' }}>
-                  {submitError}
-                </p>
-              )}
 
               <p style={{ 
                 textAlign: 'center', 

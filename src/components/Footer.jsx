@@ -50,7 +50,7 @@ const Footer = () => {
               📞 01 23 45 67 89
             </p>
             <p style={{ color: '#bdc3c7', marginBottom: '0.5rem' }}>
-              ✉️ team@evolivie.com
+              ✉️ contact@evolivie.com
             </p>
             <p style={{ color: '#bdc3c7' }}>
               📍 Paris, France
